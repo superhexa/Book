@@ -1,0 +1,21 @@
+{
+  "background_color": "#0b3d2e",
+  "description": "احجز ملاعب كرة القدم في الأردن، تابع المباريات، واستلم إشعارات فورية.",
+  "dir": "rtl",
+  "display": "standalone",
+  "icons": [
+    {
+      "src": "/icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ],
+  "lang": "ar-JO",
+  "name": "ترف بوك — احجز ملاعب كرة القدم في الأردن",
+  "orientation": "portrait",
+  "scope": "/",
+  "short_name": "ترف بوك",
+  "start_url": "/",
+  "theme_color": "#0b3d2e"
+}
