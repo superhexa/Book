@@ -1,0 +1,1 @@
+{"buildCommand":"npx expo export --platform web","framework":null,"installCommand":"yarn install --frozen-lockfile","outputDirectory":"dist"}
