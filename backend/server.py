@@ -18,10 +18,16 @@ import routes_notifications
 import routes_auth
 import routes_bookings
 import routes_catalog
+import routes_disputes
 import routes_engagement
 import routes_facilities
 import routes_geo
+import routes_leagues
+import routes_matches
+import routes_news
 import routes_owner
+import routes_teams
+import routes_tournaments
 import routes_payments
 import routes_reviews
 
@@ -57,6 +63,12 @@ api_router.include_router(routes_payments.router)
 api_router.include_router(routes_reviews.router)
 api_router.include_router(routes_admin.router)
 api_router.include_router(routes_notifications.router)
+api_router.include_router(routes_teams.router)
+api_router.include_router(routes_leagues.router)
+api_router.include_router(routes_matches.router)
+api_router.include_router(routes_tournaments.router)
+api_router.include_router(routes_disputes.router)
+api_router.include_router(routes_news.router)
 
 app.include_router(api_router)
 
