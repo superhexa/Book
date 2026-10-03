@@ -114,6 +114,9 @@ async def unhandled_handler(request: Request, exc: Exception):
 
 @app.on_event("startup")
 async def startup():
+    if db is None:
+        logger.warning("MONGO_URL/DB_NAME not set - skipping DB indexes, migrations and seeding")
+        return
     # indexes
     await db.users.create_index("email", unique=True)
     await db.sessions.create_index("refresh_hash", unique=True)
@@ -175,4 +178,5 @@ async def startup():
 @app.on_event("shutdown")
 async def shutdown():
     from db import client
-    client.close()
+    if client is not None:
+        client.close()
