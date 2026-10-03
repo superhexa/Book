@@ -6,7 +6,13 @@ from motor.motor_asyncio import AsyncIOMotorClient
 import config
 
 if config.MONGO_URL:
-    client = AsyncIOMotorClient(config.MONGO_URL, tz_aware=True, tzinfo=timezone.utc)
+    client = AsyncIOMotorClient(
+        config.MONGO_URL,
+        tz_aware=True,
+        tzinfo=timezone.utc,
+        serverSelectionTimeoutMS=10000,
+        connectTimeoutMS=10000,
+    )
     db = client[config.DB_NAME]
 else:
     client = None
