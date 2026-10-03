@@ -32,9 +32,9 @@ import routes_payments
 import routes_reviews
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s")
-logger = logging.getLogger("turfbook")
+logger = logging.getLogger("book")
 
-app = FastAPI(title="TurfBook API", version="1.0.0")
+app = FastAPI(title="Book API", version="1.0.0")
 app.state.limiter = limiter
 app.add_middleware(SlowAPIMiddleware)
 
@@ -43,12 +43,20 @@ api_router = APIRouter(prefix="/api")
 
 @api_router.get("/")
 async def root():
-    return {"service": "TurfBook API", "status": "ok"}
+    return {"service": "Book API", "status": "ok", "db_configured": db is not None}
 
 
 @api_router.get("/health")
 async def health():
-    await db.command("ping") if hasattr(db, "command") else None
+    if db is None:
+        return JSONResponse(
+            status_code=503,
+            content={
+                "status": "not_configured",
+                "message": "Backend is running but MONGO_URL/DB_NAME are not set.",
+            },
+        )
+    await db.command("ping")
     return {"status": "healthy"}
 
 

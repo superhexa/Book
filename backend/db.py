@@ -5,8 +5,12 @@ from motor.motor_asyncio import AsyncIOMotorClient
 
 import config
 
-client = AsyncIOMotorClient(config.MONGO_URL, tz_aware=True, tzinfo=timezone.utc)
-db = client[config.DB_NAME]
+if config.MONGO_URL:
+    client = AsyncIOMotorClient(config.MONGO_URL, tz_aware=True, tzinfo=timezone.utc)
+    db = client[config.DB_NAME]
+else:
+    client = None
+    db = None  # backend running without database configuration
 
 
 def new_id() -> str:

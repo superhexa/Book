@@ -6,15 +6,15 @@ from dotenv import load_dotenv
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / ".env")
 
-MONGO_URL = os.environ["MONGO_URL"]
-DB_NAME = os.environ["DB_NAME"]
+MONGO_URL = os.environ.get("MONGO_URL", "").strip()
+DB_NAME = os.environ.get("DB_NAME", "").strip() or "book"
 
 JWT_SECRET = os.environ.get("JWT_SECRET", "dev-insecure-secret")
 JWT_ALG = "HS256"
 ACCESS_MINUTES = int(os.environ.get("ACCESS_MINUTES", "30"))
 REFRESH_DAYS = int(os.environ.get("REFRESH_DAYS", "30"))
 
-SUPER_ADMIN_EMAIL = os.environ.get("SUPER_ADMIN_EMAIL", "admin@turfbook.com").lower()
+SUPER_ADMIN_EMAIL = os.environ.get("SUPER_ADMIN_EMAIL", "admin@book.jo").lower()
 SUPER_ADMIN_PASSWORD = os.environ.get("SUPER_ADMIN_PASSWORD", "Admin@12345")
 
 CORS_ORIGINS = os.environ.get("CORS_ORIGINS", "*")
