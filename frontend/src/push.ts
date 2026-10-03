@@ -13,7 +13,9 @@
  */
 import { Platform } from 'react-native';
 
-const API_BASE = process.env.EXPO_PUBLIC_API_URL ?? '';
+const API_BASE = (
+  process.env.EXPO_PUBLIC_BACKEND_URL ?? process.env.EXPO_PUBLIC_API_URL ?? ''
+).replace(/\/$/, '');
 const SW_PATH = '/sw.js';
 
 function api(path: string, init?: RequestInit) {
