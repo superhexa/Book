@@ -175,7 +175,7 @@ export default function FieldDetailPage() {
                 {f.phone ? (
                   <View style={s.contactItem}>
                     <Phone size={16} color={colors.brandPrimary} />
-                    <Text style={s.contactTxt} dir="ltr">{f.phone}</Text>
+                    <Text style={[s.contactTxt, { writingDirection: "ltr" }]}>{f.phone}</Text>
                   </View>
                 ) : null}
                 {f.address ? (

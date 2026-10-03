@@ -50,7 +50,7 @@ export function RoleTabs({ tabs }: { tabs: TabConfig[] }) {
           name={t.name}
           options={{
             title: t.title,
-            tabBarIcon: ({ color, size }) => t.icon(color, size),
+            tabBarIcon: ({ color, size }) => t.icon(String(color), size),
           }}
         />
       ))}

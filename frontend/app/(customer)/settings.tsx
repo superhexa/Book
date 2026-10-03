@@ -91,7 +91,7 @@ export default function SettingsScreen() {
       <SectionCard title={t("settings.lang", "اللغة")}>
         <View style={s.langRow}>
           <Globe size={20} color={colors.muted} />
-          <Text style={s.langTxt}>{locale === "ar" ? t("settings.arabic", "العربية") : t("settings.english", "English")}</Text>
+          <Text style={s.langTxt}>{locale === "ar-JO" ? t("settings.arabic", "العربية") : t("settings.english", "English")}</Text>
         </View>
         <Text style={s.note}>{t("settings.langNote", "لغة التطبيق الافتراضية هي العربية (الأردن)")}</Text>
       </SectionCard>
