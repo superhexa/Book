@@ -2,7 +2,7 @@
 import { Image } from "expo-image";
 import { Text, View } from "react-native";
 import { router, useLocalSearchParams } from "expo-router";
-import { Clock, MapPin, SoccerBall, User, Whistle } from "phosphor-react-native";
+import { Clock, Flag, MapPin, SoccerBall, User } from "phosphor-react-native";
 
 import { EmptyState } from "@/src/components/public/EmptyState";
 import { TextSkeleton } from "@/src/components/public/Skeleton";
@@ -95,7 +95,7 @@ export default function MatchDetailPage() {
               ) : null}
               {m.referee ? (
                 <View style={s.metaItem}>
-                  <Whistle size={16} color={colors.brandPrimary} />
+                  <Flag size={16} color={colors.brandPrimary} />
                   <Text style={s.metaTxt}>{t("matches.referee", "الحكم")}: {m.referee}</Text>
                 </View>
               ) : null}
