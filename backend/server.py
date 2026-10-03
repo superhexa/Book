@@ -56,7 +56,18 @@ async def health():
                 "message": "Backend is running but MONGO_URL/DB_NAME are not set.",
             },
         )
-    await db.command("ping")
+    if getattr(app.state, "db_error", None):
+        return JSONResponse(
+            status_code=503,
+            content={"status": "db_error", "message": app.state.db_error},
+        )
+    try:
+        await db.command("ping")
+    except Exception as e:
+        return JSONResponse(
+            status_code=503,
+            content={"status": "db_error", "message": f"{type(e).__name__}: {e}"},
+        )
     return {"status": "healthy"}
 
 
@@ -114,9 +125,19 @@ async def unhandled_handler(request: Request, exc: Exception):
 
 @app.on_event("startup")
 async def startup():
+    app.state.db_error = None
     if db is None:
+        app.state.db_error = "MONGO_URL/DB_NAME not set"
         logger.warning("MONGO_URL/DB_NAME not set - skipping DB indexes, migrations and seeding")
         return
+    try:
+        await _init_db()
+    except Exception as e:
+        app.state.db_error = f"{type(e).__name__}: {e}"
+        logger.exception("DB startup failed - API running in degraded mode: %s", e)
+
+
+async def _init_db():
     # indexes
     await db.users.create_index("email", unique=True)
     await db.sessions.create_index("refresh_hash", unique=True)
