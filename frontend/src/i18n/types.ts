@@ -1,5 +1,5 @@
 /**
- * Typed translation key structure for the TurfBook i18n system.
+ * Typed translation key structure for the Book i18n system.
  *
  * `Translations` mirrors the shape of `ar.ts` (and `en.ts`). Every locale
  * file must implement this interface so missing keys fail at build time.

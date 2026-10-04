@@ -30,6 +30,14 @@ export default function Root({ children }: PropsWithChildren) {
           If you want to enable scrolling, remove `ScrollViewStyleReset` and
           set `overflow: auto` on the body style below.
         */}
+        <title>Book | احجز ملعبك في الأردن</title>
+        <meta name="description" content="Book — منصة حجز الملاعب والدوريات الأولى في الأردن. احجز ملعبك، انضم لدوري، وتابع فريقك." />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap"
+          rel="stylesheet"
+        />
         <ScrollViewStyleReset />
         <style
           dangerouslySetInnerHTML={{
@@ -37,6 +45,15 @@ export default function Root({ children }: PropsWithChildren) {
               body > div:first-child { position: fixed !important; top: 0; left: 0; right: 0; bottom: 0; }
               [role="tablist"] [role="tab"] * { overflow: visible !important; }
               [role="heading"], [role="heading"] * { overflow: visible !important; }
+              html, body, #root { font-family: 'IBM Plex Sans Arabic','Tajawal','Segoe UI',system-ui,sans-serif; }
+              * { -webkit-tap-highlight-color: transparent; }
+              ::selection { background: #B9EC2E; color: #0C1411; }
+              ::-webkit-scrollbar { width: 10px; height: 10px; }
+              ::-webkit-scrollbar-track { background: #F4F6F1; }
+              ::-webkit-scrollbar-thumb { background: #CFD6C4; border-radius: 8px; }
+              ::-webkit-scrollbar-thumb:hover { background: #0E3B2C; }
+              @keyframes floaty { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+              @keyframes pulse-glow { 0%,100% { opacity: .55; } 50% { opacity: 1; } }
             `,
           }}
         />

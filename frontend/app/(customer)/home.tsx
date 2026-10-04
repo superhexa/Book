@@ -25,6 +25,8 @@ export default function CustomerDashboard() {
   const past = useQuery({ queryKey: ["dash-past"], queryFn: () => api.get<Booking[]>("/bookings?scope=past") });
   const favs = useQuery({ queryKey: ["dash-favs"], queryFn: () => api.get("/favorites") });
   const notifs = useQuery({ queryKey: ["dash-notifs"], queryFn: () => api.get("/notifications?limit=5") });
+  const myTeams = useQuery({ queryKey: ["dash-teams"], queryFn: () => api.get<{ items: any[] }>("/teams?mine=true&limit=5") });
+  const activeLeagues = useQuery({ queryKey: ["dash-leagues"], queryFn: () => api.get<{ items: any[] }>("/leagues?status=ACTIVE&limit=3") });
 
   const loading = upcoming.isLoading || past.isLoading;
   const upList: Booking[] = upcoming.data || [];
@@ -124,21 +126,41 @@ export default function CustomerDashboard() {
           <CardGrid>
             <SectionCard
               title={t("dash.team", "فريقي")}
-              subtitle={t("dash.teamSoon", "إدارة الفرق ستتوفر قريباً")}
+              subtitle={t("dash.teamSub", "فرقك وعضوياتك")}
+              action={<Button title="إدارة" variant="ghost" onPress={() => router.push("/teams")} />}
             >
-              <View style={s.soonRow}>
-                <UsersThree size={28} color={colors.muted} weight="duotone" />
-                <Text style={s.soonTxt}>{t("dash.teamBody", "أنشئ فريقك، ادعُ أصدقاءك، وتابع مبارياتكم معاً.")}</Text>
-              </View>
+              {(myTeams.data?.items || []).length === 0 ? (
+                <View style={s.soonRow}>
+                  <UsersThree size={28} color={colors.muted} weight="duotone" />
+                  <Text style={s.soonTxt}>{t("dash.noTeam", "لست عضواً في أي فريق بعد — أنشئ فريقك وادعُ أصدقاءك.")}</Text>
+                </View>
+              ) : (
+                (myTeams.data?.items || []).map((tm: any) => (
+                  <Pressable key={tm.id} onPress={() => router.push(`/teams/${tm.slug || tm.id}`)} style={s.teamRow}>
+                    <UsersThree size={20} color={colors.brandPrimary} />
+                    <Text style={s.teamName}>{tm.name}</Text>
+                  </Pressable>
+                ))
+              )}
             </SectionCard>
             <SectionCard
               title={t("dash.league", "الدوري")}
-              subtitle={t("dash.leagueSoon", "الترتيب والمباريات ستتوفر قريباً")}
+              subtitle={t("dash.leagueSub", "دوريات نشطة الآن")}
+              action={<Button title="الدوريات" variant="ghost" onPress={() => router.push("/leagues")} />}
             >
-              <View style={s.soonRow}>
-                <Trophy size={28} color={colors.muted} weight="duotone" />
-                <Text style={s.soonTxt}>{t("dash.leagueBody", "تابع ترتيب فريقك ونتائج المباريات لحظة بلحظة.")}</Text>
-              </View>
+              {(activeLeagues.data?.items || []).length === 0 ? (
+                <View style={s.soonRow}>
+                  <Trophy size={28} color={colors.muted} weight="duotone" />
+                  <Text style={s.soonTxt}>{t("dash.noLeague", "لا توجد دوريات نشطة حالياً.")}</Text>
+                </View>
+              ) : (
+                (activeLeagues.data?.items || []).map((lg: any) => (
+                  <Pressable key={lg.id} onPress={() => router.push(`/leagues/${lg.slug || lg.id}`)} style={s.teamRow}>
+                    <Trophy size={20} color={colors.brandPrimary} />
+                    <Text style={s.teamName}>{lg.name}</Text>
+                  </Pressable>
+                ))
+              )}
             </SectionCard>
           </CardGrid>
         </>
@@ -149,6 +171,8 @@ export default function CustomerDashboard() {
 }
 
 const useStyles = makeStyles((c) => ({
+  teamRow: { flexDirection: "row", alignItems: "center", gap: spacing.sm, backgroundColor: c.surfaceSecondary, borderRadius: 10, padding: spacing.sm },
+  teamName: { fontSize: fontSize.base, color: c.onSurface, fontWeight: "600" },
   greetRow: { flexDirection: "row", alignItems: "center", gap: spacing.md },
   greet: { color: c.onSurface, fontSize: fontSize["2xl"], fontWeight: "800" },
   greetSub: { color: c.muted, fontSize: fontSize.base, marginTop: 4 },

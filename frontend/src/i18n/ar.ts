@@ -7,7 +7,7 @@ import type { Translations } from "./types";
  */
 export const ar: Translations = {
   common: {
-    appName: "تيرف بوك",
+    appName: "Book",
     tagline: "احجز ملعبك في الأردن بضغطة زر",
     buttons: {
       save: "حفظ",
@@ -55,7 +55,7 @@ export const ar: Translations = {
     settings: "الإعدادات",
   },
   auth: {
-    welcome: "أهلاً بك في تيرف بوك",
+    welcome: "أهلاً بك في Book",
     welcomeBack: "مرحباً بعودتك",
     login: "تسجيل الدخول",
     register: "إنشاء حساب",

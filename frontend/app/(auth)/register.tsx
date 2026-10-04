@@ -53,7 +53,7 @@ export default function RegisterScreen() {
       <View style={[s.heroContent, { paddingTop: insets.top + spacing.lg }]}>
         <Pressable testID="back-landing" onPress={() => router.replace("/landing")} style={s.backBtn}><ArrowLeft size={18} color="#FFF" /></Pressable>
         <View style={{ flex: 1, justifyContent: "flex-end" }}>
-          <Text style={s.heroBrand}>⚽ TurfBook</Text>
+          <Text style={s.heroBrand}>⚽ Book</Text>
           <Text style={s.heroHeadline}>Join the game. Play more, hassle less.</Text>
         </View>
       </View>

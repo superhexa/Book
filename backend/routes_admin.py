@@ -373,3 +373,63 @@ async def delete_role(key: str, request: Request, user: dict = Depends(require_p
     await db.roles.delete_one({"_id": key})
     await write_audit(user, "role_deleted", "roles", key, request)
     return {"message": "Role deleted"}
+
+
+# ============================ broadcasts =================================
+class BroadcastBody(BaseModel):
+    audience: str = "all"  # all | customers | owners
+    title: str = Field(min_length=3, max_length=120)
+    body: str = Field(min_length=3, max_length=500)
+
+
+@router.post("/notifications/broadcast", status_code=201)
+async def broadcast_notifications(
+    body: BroadcastBody, request: Request,
+    user: dict = Depends(require_permission("notifications.broadcast")),
+):
+    """Send a broadcast: in-app notification + web push to an audience."""
+    if body.audience not in ("all", "customers", "owners"):
+        raise HTTPException(400, "الجمهور غير صالح")
+    query: dict = {"deleted_at": None, "is_active": True}
+    if body.audience == "customers":
+        query["roles"] = "customer"
+    elif body.audience == "owners":
+        query["roles"] = "owner"
+
+    recipients = 0
+    push_sent = 0
+    async for u in db.users.find(query, {"_id": 1}):
+        uid = str(u["_id"])
+        await notify(uid, "broadcast", body.title.strip(), body.body.strip(),
+                     {"audience": body.audience})
+        recipients += 1
+    # web push (best effort per user)
+    from push import push_to_user
+    async for u in db.users.find(query, {"_id": 1}):
+        try:
+            push_sent += await push_to_user(str(u["_id"]), {
+                "title": body.title.strip(), "body": body.body.strip(),
+                "url": "/notifications",
+            })
+        except Exception:
+            continue
+
+    doc = {
+        "_id": new_id(), "audience": body.audience,
+        "title": body.title.strip(), "body": body.body.strip(),
+        "recipients": recipients, "push_sent": push_sent,
+        "created_by": user["_id"], "created_at": now(),
+    }
+    await db.broadcasts.insert_one(doc)
+    await write_audit(user, "broadcast_sent", "broadcasts", doc["_id"], request,
+                      after={"audience": body.audience, "recipients": recipients})
+    return ser(doc)
+
+
+@router.get("/notifications/broadcasts")
+async def list_broadcasts(
+    user: dict = Depends(require_permission("notifications.broadcast")),
+    limit: int = Query(50, ge=1, le=200),
+):
+    docs = await db.broadcasts.find().sort("created_at", -1).to_list(limit)
+    return ser_many(docs)

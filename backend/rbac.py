@@ -43,6 +43,9 @@ PERMISSION_GROUPS = {
     "Audit": [
         "audit_logs.read",
     ],
+    "Notifications": [
+        "notifications.broadcast",
+    ],
 }
 
 ALL_PERMISSIONS = [p for group in PERMISSION_GROUPS.values() for p in group]
@@ -80,6 +83,7 @@ DEFAULT_ROLES = [
             "coupons.read",
             "audit_logs.read",
             "roles.read", "permissions.read",
+            "notifications.broadcast",
         ],
         "is_system": True,
         "editable": True,

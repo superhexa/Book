@@ -6,7 +6,7 @@ from pydantic import BaseModel, Field
 
 from audit import write_audit
 from db import db, new_id, now, ser, ser_many
-from security import current_user, has_permission, is_super_admin, optional_user
+from security import current_user, optional_user, has_permission, is_super_admin
 
 router = APIRouter(tags=["teams"])
 
@@ -95,7 +95,9 @@ async def create_team(body: TeamBody, request: Request,
 @router.get("/teams")
 async def list_teams(q: Optional[str] = None, governorate: Optional[str] = None,
                     city: Optional[str] = None,
-                    page: int = Query(1, ge=1), limit: int = Query(20, ge=1, le=100)):
+                    mine: bool = Query(False),
+                    page: int = Query(1, ge=1), limit: int = Query(20, ge=1, le=100),
+                    user: Optional[dict] = Depends(optional_user)):
     query = {"deleted_at": None, "is_active": True}
     if q:
         query["name"] = {"$regex": q, "$options": "i"}
@@ -103,6 +105,12 @@ async def list_teams(q: Optional[str] = None, governorate: Optional[str] = None,
         query["governorate"] = governorate
     if city:
         query["city"] = city
+    if mine:
+        if not user:
+            raise HTTPException(401, "يلزم تسجيل الدخول")
+        member_of = await db.team_members.distinct(
+            "team_id", {"user_id": user["_id"], "deleted_at": None})
+        query["_id"] = {"$in": member_of}
     total = await db.teams.count_documents(query)
     docs = await db.teams.find(query).sort("created_at", -1).skip(
         (page - 1) * limit).limit(limit).to_list(limit)

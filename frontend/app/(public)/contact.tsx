@@ -21,7 +21,7 @@ export default function ContactPage() {
   const [message, setMessage] = useState("");
 
   const openMail = () => {
-    const subject = encodeURIComponent(`رسالة من ${name || "زائر"} — تيرف بوك`);
+    const subject = encodeURIComponent(`رسالة من ${name || "زائر"} — Book`);
     const body = encodeURIComponent(`الاسم: ${name}\nالهاتف: ${phone}\n\n${message}`);
     Linking.openURL(`mailto:${SUPPORT_EMAIL}?subject=${subject}&body=${body}`);
   };

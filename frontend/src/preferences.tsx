@@ -7,7 +7,7 @@ type Lang = "en" | "ar";
 type SchemePref = ColorScheme | "system";
 
 const STR: Record<string, { en: string; ar: string }> = {
-  appName: { en: "TurfBook", ar: "تيرف بوك" },
+  appName: { en: "Book", ar: "Book" },
   tagline: { en: "Book the pitch. Play the game.", ar: "احجز الملعب. العب المباراة." },
   login: { en: "Sign in", ar: "تسجيل الدخول" },
   register: { en: "Create account", ar: "إنشاء حساب" },
