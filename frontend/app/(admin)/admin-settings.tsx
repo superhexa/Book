@@ -38,7 +38,7 @@ export default function AdminSettings() {
 
   return (
     <PanelScreen testID="admin-settings">
-      <PageHeader title={t("as.title", "إعدادات المنصة")} subtitle={t("as.sub", "الإعدادات العامة لمنصة تيرف بوك")} />
+      <PageHeader title={t("as.title", "إعدادات المنصة")} subtitle={t("as.sub", "الإعدادات العامة لمنصة Book")} />
       {q.isLoading ? <SkeletonList rows={4} /> : q.isError ? (
         <ErrorState message={t("common.loadError", "تعذر تحميل البيانات")} onRetry={() => q.refetch()} />
       ) : (
