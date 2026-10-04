@@ -6,7 +6,7 @@ import type { Translations } from "./types";
  */
 export const en: Translations = {
   common: {
-    appName: "TurfBook",
+    appName: "Book",
     tagline: "Book your pitch in Jordan in one tap",
     buttons: {
       save: "Save",
@@ -54,7 +54,7 @@ export const en: Translations = {
     settings: "Settings",
   },
   auth: {
-    welcome: "Welcome to TurfBook",
+    welcome: "Welcome to Book",
     welcomeBack: "Welcome back",
     login: "Log in",
     register: "Sign up",

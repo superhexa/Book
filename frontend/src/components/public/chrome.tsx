@@ -67,7 +67,7 @@ export function RtlGate({ children }: { children: React.ReactNode }) {
 export function usePageTitle(title: string) {
   useEffect(() => {
     if (Platform.OS === "web" && typeof document !== "undefined") {
-      document.title = `${title} | تيرف بوك`;
+      document.title = `${title} | Book`;
     }
   }, [title]);
 }
@@ -80,7 +80,7 @@ export function AppLogo({ compact }: { compact?: boolean }) {
       <View style={s.logoBall}>
         <SoccerBall size={compact ? 20 : 24} color="#FFFFFF" weight="fill" />
       </View>
-      <Text style={[s.logoTxt, compact && { fontSize: fontSize.lg }]}>تيرف بوك</Text>
+      <Text style={[s.logoTxt, compact && { fontSize: fontSize.lg }]}>Book</Text>
     </Pressable>
   );
 }
@@ -256,7 +256,7 @@ export function PublicFooter() {
             <View style={s.logoBall}>
               <SoccerBall size={24} color="#FFFFFF" weight="fill" />
             </View>
-            <Text style={[s.logoTxt, { color: s.footerTitleColor.color as string }]}>تيرف بوك</Text>
+            <Text style={[s.logoTxt, { color: s.footerTitleColor.color as string }]}>Book</Text>
           </Pressable>
           <Text style={s.footerAbout}>
             {t("footer.about_text", "منصة كرة القدم الأولى في الأردن — احجز أفضل الملاعب، تابع الدوريات والفرق، وعش شغف اللعبة.")}
@@ -280,7 +280,7 @@ export function PublicFooter() {
         </View>
       </View>
       <View style={s.footerBottom}>
-        <Text style={s.footerMuted}>© 2026 تيرف بوك — صُنع بشغف لكرة القدم الأردنية</Text>
+        <Text style={s.footerMuted}>© 2026 Book — صُنع بشغف لكرة القدم الأردنية</Text>
       </View>
     </View>
   );

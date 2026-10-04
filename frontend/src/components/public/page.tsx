@@ -21,7 +21,7 @@ export function PublicPage({
 }) {
   const { colors } = useTheme();
   const isMobile = useIsMobile();
-  usePageTitle(title || "تيرف بوك");
+  usePageTitle(title || "Book");
   return (
     <ScrollView
       testID={testID}

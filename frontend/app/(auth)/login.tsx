@@ -53,7 +53,7 @@ export default function LoginScreen() {
           <ArrowLeft size={18} color="#FFF" />
         </Pressable>
         <View style={{ flex: 1, justifyContent: "flex-end" }}>
-          <Text style={s.heroBrand}>⚽ TurfBook</Text>
+          <Text style={s.heroBrand}>⚽ Book</Text>
           <Text style={s.heroHeadline}>Your next match is one tap away.</Text>
           <View style={s.heroBadge}>
             <SealCheck size={16} color={colors.brandPrimary} weight="fill" />

@@ -1,5 +1,5 @@
 /**
- * i18n setup for TurfBook — Arabic-first (ar-JO default), RTL-native.
+ * i18n setup for Book — Arabic-first (ar-JO default), RTL-native.
  *
  * Exports:
  *   - `I18nProvider`  — wrap the app root with this.
